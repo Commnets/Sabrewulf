@@ -19,10 +19,10 @@ class SabreWulfMonster : public QGAMES::Artist
 		_APE = 0, _BIRD1, _BIRD2, _BIRD3, _BUG, _LOBSTER, 
 		_MOTH, _MOUSE, _SCORPION, _SKUNK, _SNAKE1, _SNAKE2, 
 		_SNAKE3, _SPIDER1, _SPIDER2, _SPIDER3, _THING,
-		_FROG1, _FROG2, _LIZARD, _OWL1, _OWL2,
+		_FROG1, _FROG2, _LIZARD, _OWL1, _OWL2, _FIRE, // The fire is a special nastie...because it is inmortal...
 		// The inmortals...
 		_RHINOLEFT, _RHINORIGHT, _SPEARMANBLUE, 
-		_SPEARMANPINK, _SPEARMANRED, _FIRE, 
+		_SPEARMANPINK, _SPEARMANRED, 
 		_WOLF, _HIPPO };
 
 	/** The different state a monster can have.
@@ -266,8 +266,33 @@ class NastieBehaviour : public SabreWulfMonster::Behaviour
 	/** Nasties die when sabreman hits them. */
 	virtual void whatToDoWhenSabremanHitsIt ();
 
-	private:
+	protected:
 	QGAMES::Vector _lastMovement;
+};
+
+/** The behaviour of the fire. 
+	The fire appears when sabreman stays a while in the same place,
+	and dissapears once sabreman leaves the maze place he is in. 
+	The behaviour is quite close to nastie's but always going after 
+	sabreman. */
+class FireBehaviour : public NastieBehaviour
+{
+	public:
+	FireBehaviour (SabreWulfMonster* m, Sabreman* s)
+		: NastieBehaviour (m, s)
+							{ }
+
+	/** Fire can't die! */
+	virtual bool canDie () const
+							{ return (false); }
+	/** The movement direction is going always after sabreman! */
+	virtual QGAMES::Vector changeMovementDirection ();
+	/** Can't be damage by sabreman. */
+	virtual bool couldBeDamagedBySabreman () const
+						{ return (false); }
+	/** Nothing happens when sabreman hits it. */
+	virtual void whatToDoWhenSabremanHitsIt ()
+						{ }
 };
 
 /** This class represents all entities that are inmortal in the game. 

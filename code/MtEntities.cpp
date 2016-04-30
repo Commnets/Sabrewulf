@@ -294,11 +294,6 @@ SabreWulfMonster::State SabreWulfMonster::whenMoving ()
 {
 	assert (_behaviour);
 
-	if (_aspect == SabreWulfMonster::Aspect::_SPEARMANBLUE ||
-		_aspect == SabreWulfMonster::Aspect::_SPEARMANPINK ||
-		_aspect == SabreWulfMonster::Aspect::_SPEARMANRED)
-		std::cout << ((SabreWulfArtistMovement*) currentMovement ()) -> speed () << std::endl;
-
 	if (_decideTarget)
 	{
 		_decideTarget = false;
@@ -420,21 +415,25 @@ void SabreWulfNastie::initializeAs (SabreWulfMonster::Aspect a, int mP,
 			_aspect == _FROG2 ||
 			_aspect == _LIZARD ||
 			_aspect == _OWL1 ||
-			_aspect == _OWL2); // It has to be a nastie!
+			_aspect == _OWL2 ||
+			_aspect == _FIRE); // It has to be a nastie!
 
 	SabreWulfMonster::initializeAs (a, mP, pos, s);
 
 	setState (SabreWulfMonster::State::_WAITING);
 	// In the case of a nastie, waiting forms and not alive forms are the same!
 
-	_behaviour = new NastieBehaviour (this, _sabreman);
+	if (_behaviour) delete _behaviour; // Deletes a previous behaviour...
+	_behaviour = (a == _FIRE) 
+		? new FireBehaviour (this, _sabreman) : new NastieBehaviour (this, _sabreman);
 
 	_counterAppearances = 0;
 	_counterNotVisible = 0;
 	// The time to appear the monster, is a random number of seconds
 	// depending on the level of the game!
-	_timeToAppear = 
-		(rand () % (((SabreWulfGame*) game ()) -> levelInfo ()._maxTimeToAppearNasties + 1)) *
+	// If it is the fire...the time is 0!
+	_timeToAppear = (a == _FIRE) 
+		? 0 : (rand () % (((SabreWulfGame*) game ()) -> levelInfo ()._maxTimeToAppearNasties + 1)) *
 			game () -> framesPerSecond ();
 	_numberOfAppears = 0;
 }
@@ -593,39 +592,53 @@ void SabreWulfNastie::setAspectAndForm ()
 	{
 		case SabreWulfMonster::State::_GROWING:
 			// The aspects don't depend on nastie's form!
-			_initialFrameRight =	0;  
-			_finalFrameRight =		__SABREWULFNASTIEBORNASPECTS__ - 1;
-			_initialFrameLeft =		0;
-			_finalFrameLeft =		__SABREWULFNASTIEBORNASPECTS__ - 1;
-			_cInitialFrame =		_initialFrameLeft;
-			_cFinalFrame =			_finalFrameLeft;
-			setCurrentForm (__SABREWULFBASENASTIEBORNFORM__ + (int) _aspect); // Sets the Form...
+			// Fire has an special form and the number of aspects are also different...
+			_initialFrameRight = 0;  
+			_finalFrameRight = (_aspect == SabreWulfMonster::Aspect::_FIRE) 
+				? (__SABREWULFFIREBORNASPECTS__ - 1) : (__SABREWULFNASTIEBORNASPECTS__ - 1);
+			_initialFrameLeft = 0;
+			_finalFrameLeft = (_aspect == SabreWulfMonster::Aspect::_FIRE) 
+				? (__SABREWULFFIREBORNASPECTS__ - 1) : (__SABREWULFNASTIEBORNASPECTS__ - 1);
+			_cInitialFrame = _initialFrameLeft;
+			_cFinalFrame = _finalFrameLeft;
+			setCurrentForm ((_aspect == SabreWulfMonster::Aspect::_FIRE) ?
+				__SABREWULFFIREBORNFORM__ : (__SABREWULFBASENASTIEBORNFORM__ + (int) _aspect)); // Sets the Form...
 			setCurrentAspect (_cInitialFrame); // ...and aspect
 			setCurrentMovement (__MININT__);
 			break;
 
 		case SabreWulfMonster::State::_MOVING:
 			// The aspects don't depend on nastie's form!
-			_initialFrameRight =	__SABREWULFNASTIERIGHTINIT__;  
-			_finalFrameRight =		__SABREWULFNASTIERIGHTEND__;
-			_initialFrameLeft =		__SABREWULFNASTIELEFTINIT__;
-			_finalFrameLeft =		__SABREWULFNASTIELEFTEND__;
-			_cInitialFrame =_initialFrameLeft;
-			_cFinalFrame =	_finalFrameLeft;
-			setCurrentForm (__SABREWULFBASENASTIEFORM__ + (int) _aspect); // Sets the Form...
+			// Fire has an special form and the number of aspects are also different...
+			_initialFrameRight = (_aspect == SabreWulfMonster::Aspect::_FIRE)
+				? __SABREWULFFIRERIGHTINIT__ : __SABREWULFNASTIERIGHTINIT__;  
+			_finalFrameRight = (_aspect == SabreWulfMonster::Aspect::_FIRE)
+				? __SABREWULFFIRERIGHTEND__ : __SABREWULFNASTIERIGHTEND__;
+			_initialFrameLeft = (_aspect == SabreWulfMonster::Aspect::_FIRE)
+				? __SABREWULFFIRELEFTINIT__ : __SABREWULFNASTIELEFTINIT__;
+			_finalFrameLeft = (_aspect == SabreWulfMonster::Aspect::_FIRE)
+				? __SABREWULFFIRELEFTEND__ : __SABREWULFNASTIELEFTEND__;
+			_cInitialFrame = _initialFrameLeft;
+			_cFinalFrame = _finalFrameLeft;
+			setCurrentForm ((_aspect == SabreWulfMonster::Aspect::_FIRE) 
+				? __SABREWULFFIREFORM__ : __SABREWULFBASENASTIEFORM__ + (int) _aspect); // Sets the Form...
 			setCurrentAspect (_cInitialFrame); // ...and aspect
-			setCurrentMovement (__SABREWULFMONSTERBASEMOV__ + (_id - __SABREWULFNASTIESBASE__));
+			setCurrentMovement ((_aspect == SabreWulfMonster::Aspect::_FIRE) 
+				? __SABREWULFFIREMOVS__ : (__SABREWULFMONSTERBASEMOV__ + (_id - __SABREWULFNASTIESBASE__)));
 			break;
 
 		case SabreWulfMonster::State::_DIEING:
 			// The aspects don't depend on nastie's form!
-			_initialFrameRight =	0;  
-			_finalFrameRight =		__SABREWULFNASTIEDIEASPECTS__ - 1;
-			_initialFrameLeft =		0;
-			_finalFrameLeft =		__SABREWULFNASTIEDIEASPECTS__ - 1;
+			_initialFrameRight = 0;  
+			_finalFrameRight = (_aspect == SabreWulfMonster::Aspect::_FIRE)
+				? (__SABREWULFFIREDIEASPECTS__ - 1) : (__SABREWULFNASTIEDIEASPECTS__ - 1);
+			_initialFrameLeft = 0;
+			_finalFrameLeft = (_aspect == SabreWulfMonster::Aspect::_FIRE)
+				? (__SABREWULFFIREDIEASPECTS__ - 1) : (__SABREWULFNASTIEDIEASPECTS__ - 1);
 			_cInitialFrame =_initialFrameLeft;
-			_cFinalFrame =	_finalFrameLeft;
-			setCurrentForm (__SABREWULFBASENASTIEDIEFORM__ + (int) _aspect); // Sets the Form...
+			_cFinalFrame = _finalFrameLeft;
+			setCurrentForm ((_aspect == SabreWulfMonster::Aspect::_FIRE)
+				? __SABREWULFFIREDIEFORM__ : (__SABREWULFBASENASTIEDIEFORM__ + (int) _aspect)); // Sets the Form...
 			setCurrentAspect (_cInitialFrame); // ...and aspect
 			setCurrentMovement (__MININT__);
 			break;
@@ -700,7 +713,6 @@ QGAMES::Vector NastieBehaviour::changeMovementDirection ()
 		result = QGAMES::Vector (__BD dx, __BD dy, __BD 0);
 	}
 
-
 	_lastMovement = result;
 	return (result);
 }
@@ -719,6 +731,47 @@ void NastieBehaviour::whatToDoWhenSabremanHitsIt ()
 			play (__SABREWULF_NASTIECHANNELBASE__); // A simple sound when dieing...
 		_monster -> setState (SabreWulfMonster::State::_DIEING);
 	}
+}
+
+// ---
+QGAMES::Vector FireBehaviour::changeMovementDirection ()
+{
+	assert (_sabreman);
+	assert (_monster);
+
+	int dx = 0; int dy = 0;
+	QGAMES::Position sPos = _sabreman -> position ();
+	QGAMES::Position mPos = _monster -> position ();
+	dx = (sPos.posX () > mPos.posX ()) 
+		? 1 : ((sPos.posX () < mPos.posX ()) ? -1 : 0);
+	dy = (sPos.posY () > mPos.posY ()) 
+		? 1 : ((sPos.posY () < mPos.posY ()) ? -1 : 0);
+
+	// If the movement is not possible it is modified...
+	// until the movement is possible or it is cero!
+	QGAMES::Vector result = QGAMES::Vector (__BD dx, __BD dy, __BD 0);
+	while (result != QGAMES::Vector::_cero && !_monster -> canMove (result, QGAMES::Vector::_cero))
+	{
+		if (dy == 0)
+		{
+			// It the movement is already horizontally, and it is not possible
+			// the movementy is not more possible!
+			if (dx != 0)
+				dx = 0;
+		}
+		// If the monster can move vertically, 
+		// and the movement is not possible, then tries a pure
+		// Horizontal movement...
+		else 
+		{
+			dy = 0;
+		}
+
+		result = QGAMES::Vector (__BD dx, __BD dy, __BD 0);
+	}
+
+	_lastMovement = result;
+	return (result);
 }
 
 // ---
@@ -744,7 +797,6 @@ void SabreWulfInmortal::initializeAs (SabreWulfMonster::Aspect a,
 			a == _SPEARMANBLUE || 
 			a == _SPEARMANPINK || 
 			a == _SPEARMANRED || 
-			a == _FIRE ||
 			a == _WOLF || 
 			a == _HIPPO); // It has to be a inmortal!
 
@@ -758,6 +810,7 @@ void SabreWulfInmortal::initializeAs (SabreWulfMonster::Aspect a,
 		? SabreWulfMonster::State::_WAITING : SabreWulfMonster::State::_MOVING);
 
 	// Additional initializations for specific monsters...
+	if (_behaviour) delete _behaviour;
 	switch (_aspect)
 	{
 		case _RHINOLEFT:

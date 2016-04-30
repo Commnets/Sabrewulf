@@ -11,6 +11,8 @@ QGAMES::Movement* MovementsBuilder::createMovement
 		result = new SabreWulfArtistMovement (def._id, def._variables);
 	else if (def._id >= __SABREWULFMONSTERBASEMOV__ && def._id < (__SABREWULFMONSTERBASEMOV__ + __SABREWULFMAXNUMBERNASTIES__))
 		result = new SabreWulfArtistMovement (def._id, def._variables);
+	else if (def._id == __SABREWULFFIREMOVS__)
+		result = new SabreWulfArtistMovement (def._id, def._variables);
 	else if (def._id == __SABREWULFINMORTALMOV__)
 		result = new SabreWulfArtistMovement (def._id, def._variables);
 	else

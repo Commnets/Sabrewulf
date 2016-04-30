@@ -18,7 +18,8 @@ SabreWulfWorld::SabreWulfWorld (const QGAMES::Scenes& s, const QGAMES::WorldProp
 	  _orchild (NULL),
 	  _objects (),
 	  _guardian (NULL),
-	  _visitedMazePlaces ()
+	  _visitedMazePlaces (),
+	  _counterToFire (0)
 { 
 	QGAMES::Buoys lB;
 	lB.insert (QGAMES::Buoys::value_type 
@@ -56,12 +57,12 @@ void SabreWulfWorld::setMazePlaceNumber (int r)
 	
 	// If sabreman enter the exit maze place, the guardian becomes visible...
 	// ...and if he has all pieces of the amulet, the guardian moves either!
-	_guardian -> setPosition (QGAMES::Position (
+/*	_guardian -> setPosition (QGAMES::Position (
 		__BD ((__SCREENWIDTH__ - _guardian -> currentForm () -> frameWidth ()) >> 1),
 		__BD ((__SCREENHEIGHT__ - _guardian -> currentForm () -> frameHeight ()) >> 1), __BD 0));
 	_guardian -> setVisible (_mazePlaceNumber == __LASTMAZEPLACE__);
 	_guardian -> setMoves 
-		(_mazePlaceNumber == __LASTMAZEPLACE__ && _mainCharacter -> isCarryingAmulet ());
+		(_mazePlaceNumber == __LASTMAZEPLACE__ && _mainCharacter -> isCarryingAmulet ());*/
 }
 
 // ---
@@ -85,6 +86,9 @@ void SabreWulfWorld::killNasties ()
 	// Kill nasties...
 	for (int i = 0; i < __SABREWULFMAXNUMBERNASTIES__; i++)
 		((SabreWulfNastie*) (__AGM game ()) -> artist (__SABREWULFNASTIESBASE__ + i)) -> kill ();
+	// Kill the fire...
+	((SabreWulfNastie*) (__AGM game ()) -> artist (__SABREWULFFIRE__)) -> kill ();
+	_counterToFire = 0; // Start to count again for fire...
 }
 
 // ---
@@ -111,6 +115,12 @@ void SabreWulfWorld::initialize ()
 		ntie -> setCurrentMovement (__MININT__);
 		_activeScene -> addEntity (ntie);
 	}
+
+	// Setup the fire...
+	SabreWulfNastie* fr = (SabreWulfNastie*)
+		(__AGM game ()) -> artist (__SABREWULFFIRE__);
+	fr -> setCurrentMovement (__MININT__);
+	_activeScene -> addEntity (fr);
 
 	// ...and then the other inmortals
 	for (int i = 0;i < __SABREWULFNUMBERINMORTALS__; i++)
@@ -164,6 +174,9 @@ void SabreWulfWorld::initialize ()
 	for (int i = 0; i < __SABREWULFMAXNUMBERNASTIES__; i++)
 		((SabreWulfNastie*) (__AGM game ()) -> artist (__SABREWULFNASTIESBASE__  + i)) -> 
 			setMap (_activeScene -> activeMap ());
+	// Add the map to the fire...
+	((SabreWulfNastie*) (__AGM game ()) -> artist (__SABREWULFFIRE__)) -> 
+		setMap (_activeScene -> activeMap ());
 	// ...and to the rest of inmortals...
 	for (int i = 0; i < __SABREWULFNUMBERINMORTALS__; i++)
 		((SabreWulfInmortal*) (__AGM game ()) -> artist (__SABREWULFINMORTALSBASE__  + i)) -> 
@@ -376,6 +389,7 @@ void SabreWulfWorld::updatePositions ()
 	// a new has to grow...
 	if (game () -> activeState () -> type () == __SABREWULFPLAYINGSTATE__)
 	{
+		// Moves the nasties...
 		if (((SabreWulfScene*) _activeScene) -> numberOfNasties () != __NUMBERNASTIESPERPLACE__)
 		{
 			int nN = ((SabreWulfScene*) _activeScene) -> firstNastieFree ();
@@ -387,6 +401,17 @@ void SabreWulfWorld::updatePositions ()
 				nT -> initializeAs (a, _mazePlaceNumber, 
 						((SabreWulfScene*) _activeScene) -> randomFreePosition (_mazePlaceNumber), _mainCharacter);
 			}
+		}
+
+		// Moves the fire if needed...
+		// When sabreman stays a lot in the same room (3 seconds)...
+		if (_counterToFire++ > (3 * game () -> framesPerSecond ()))
+		{
+			_counterToFire = 0;
+			SabreWulfNastie* fr = (SabreWulfNastie*) (__AGM game ()) -> artist (__SABREWULFFIRE__);
+			if (!fr -> isVisible ())
+				fr -> initializeAs (SabreWulfMonster::Aspect::_FIRE, _mazePlaceNumber, 
+					_mainCharacter -> position (), _mainCharacter);
 		}
 	}
 
@@ -416,7 +441,11 @@ void SabreWulfWorld::processEvent (const QGAMES::Event& e)
 		SabreWulfWorld::ToChangeMazePlaceBuoy* b = 
 			(SabreWulfWorld::ToChangeMazePlaceBuoy*) buoy (__SABREWULFTOCHANGEROOMBUOYID__);
 		b -> setData (eData); // The buoy destructor will destroy the data also!
-		b -> active (true); 
+		b -> active (true);
+		
+		// Kill the fire...if any...
+		_counterToFire = 0;
+		((SabreWulfNastie*) (__AGM game ()) -> artist (__SABREWULFFIRE__)) -> kill ();
 	}
 	// When sabreman is finishing the game...
 	else if (e.code () == __SABREMANOUTEXITZONE__)

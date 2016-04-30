@@ -153,6 +153,8 @@ class SabreWulfGame : public QGAMES::ArcadeGame
 	void playerCollisionWithObject (SabreWulfObject* obj);
 	/** When player collisions with the nasties. */
 	void playerCollisionWithNastie (SabreWulfNastie* nt);
+	/** When player collisions with the fire. */
+	void playerCollisionWithFire ();
 	/** When player collisions with an inmortal. */
 	void playerCollisionWithInmortal (SabreWulfInmortal* iM);
 	/** When player collisions with the guardian. */

@@ -450,6 +450,8 @@ void SabreWulfGame::initialize ()
 	// The nasties...
 	for (int i = 0; i < __SABREWULFMAXNUMBERNASTIES__; i++)
 		addArtist (__SABREWULFNASTIESBASE__ + i);
+	// The fire...
+	addArtist (__SABREWULFFIRE__);
 	// The inmortals...
 	for (int i = 0; i < __SABREWULFNUMBERINMORTALS__; i++)
 		addArtist (__SABREWULFINMORTALSBASE__ + i);
@@ -529,6 +531,12 @@ void SabreWulfGame::detectCollisions ()
 				player -> hasCollisionWith (mt))
 			playerCollisionWithNastie (mt);
 	}
+
+	// Then detects the collision with the fire...
+	SabreWulfNastie* fr = (SabreWulfNastie*) artist (__SABREWULFFIRE__);
+	if (fr -> isVisible () && fr -> state () == SabreWulfMonster::State::_MOVING &&
+			player -> hasCollisionWith (fr))
+		playerCollisionWithFire ();
 
 	// Now it is time to test the collisions with inmortals
 	// What happen when the collisions occurrs could be different depending on
@@ -672,6 +680,16 @@ void SabreWulfGame::playerCollisionWithNastie (SabreWulfNastie* nt)
 	// Change the state of the game if needed...
 	if (nStatus != std::string (__NULL_STRING__))
 		setState (nStatus);
+}
+
+// ---
+void SabreWulfGame::playerCollisionWithFire ()
+{
+	#ifndef NDEBUG
+	std::cout << _n++ << " Collision with fire" << std::endl;
+	#endif
+
+	playerCollisionWithNastie ((SabreWulfNastie*) artist (__SABREWULFFIRE__));
 }
 
 // ---

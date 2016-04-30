@@ -25,6 +25,8 @@ QGAMES::Entity* EntitiesBuilder::createEntity (const QGAMES::EntityBuilder::Enti
 		result = new SabreWulfInmortal (def._id); 
 	else if (def._id == __SABREWULFGUARDIAN__)
 		result = new SabreWulfGuardian ();
+	else if (def._id == __SABREWULFFIRE__)
+		result = new SabreWulfNastie (def._id);
 	else
 		exit (1); // If the code is here...wrong!
 	return (result);

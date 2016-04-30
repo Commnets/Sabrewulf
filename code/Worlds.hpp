@@ -145,6 +145,8 @@ class SabreWulfWorld : public QGAMES::World
 	/** A vector to indicate which maze places have been already visited.
 		It is used to calculate the precenaje of the game played. */
 	std::vector <bool> _visitedMazePlaces;
+	/** Counter to show the fire. */
+	int _counterToFire;
 
 	// Define a set of important buoys..
 	/** Define a buoy to change the maze place. */
