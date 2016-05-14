@@ -49,9 +49,9 @@ SabreWulfGame::SabreWulfGame ()
 	_levels [0] = l1;
 	
 	Level l2;
-	l2._level = 1;
+	l2._level = 2;
 	l2._maxTimeToAppearNasties = 1;
-	l1._maxNumberOfAppearances = 1;
+	l2._maxNumberOfAppearances = 1;
 	l2._maxNumberOfAppearingMonsters = 3;
 	l2._percentUpPerFood = 3;
 	l2._pointsUpPerFood = 160;
@@ -60,14 +60,14 @@ SabreWulfGame::SabreWulfGame ()
 	l2._secondsInNotNormalState = 4;
 	l2._secondsBetweenBlinks = 0.25f;
 	l2._numberOfBlinks = 3;
-	l1._secondsToGrowOrchild = 5;
-	l1._secondsOrchildBig = 2;
+	l2._secondsToGrowOrchild = 5;
+	l2._secondsOrchildBig = 2;
 	_levels [1] = l2;
 	
 	Level l3;
-	l3._level = 1;
-	l2._maxTimeToAppearNasties = 1;
-	l1._maxNumberOfAppearances = 1;
+	l3._level = 3;
+	l3._maxTimeToAppearNasties = 1;
+	l3._maxNumberOfAppearances = 1;
 	l3._maxNumberOfAppearingMonsters = 3;
 	l3._percentUpPerFood = 1;
 	l3._pointsUpPerFood = 200;
@@ -76,8 +76,8 @@ SabreWulfGame::SabreWulfGame ()
 	l3._secondsInNotNormalState = 4;
 	l3._secondsBetweenBlinks = 0.15f;
 	l3._numberOfBlinks = 2;
-	l1._secondsToGrowOrchild = 4;
-	l1._secondsOrchildBig = 2;
+	l3._secondsToGrowOrchild = 4;
+	l3._secondsOrchildBig = 2;
 	_levels [2] = l3;
 }
 
