@@ -36,7 +36,7 @@ class SabreWulfGuardian : public QGAMES::Artist
 
 	/** Guardian never move....automatically
 		His position will be change as sabreman carries the four amulet pieces. */
-	virtual bool canMove (const QGAMES::Vector& d, const QGAMES::Vector& a) const
+	virtual bool canMove (const QGAMES::Vector& d, const QGAMES::Vector& a)
 							{ return (false); }
 
 	/** @see parent. */

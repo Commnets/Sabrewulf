@@ -31,7 +31,7 @@ class Orchild : public QGAMES::Artist
 	Type type () const;
 
 	/** Orchilds never move. */
-	virtual bool canMove (const QGAMES::Vector& d, const QGAMES::Vector& a) const
+	virtual bool canMove (const QGAMES::Vector& d, const QGAMES::Vector& a)
 							{ return (false); }
 
 	/** @see parent. */

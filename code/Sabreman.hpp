@@ -27,7 +27,7 @@ class Sabreman : public QGAMES::Artist
 
 	/** To determinate whether the sabreman can or not move.
 		If the sabreman is in one of the moving zones the movemenet is possible. */
-	virtual bool canMove (const QGAMES::Vector& d, const QGAMES::Vector& a) const;
+	virtual bool canMove (const QGAMES::Vector& d, const QGAMES::Vector& a);
 
 	/** @see parent. */
 	virtual QGAMES::Rectangle collisionZone () const;

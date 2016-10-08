@@ -37,7 +37,7 @@ class SabreWulfObject : public QGAMES::Artist
 	int amuletPieceNumber () const;
 
 	/** Objects never move. */
-	virtual bool canMove (const QGAMES::Vector& d, const QGAMES::Vector& a) const
+	virtual bool canMove (const QGAMES::Vector& d, const QGAMES::Vector& a)
 							{ return (false); }
 
 	/** @see parent. */

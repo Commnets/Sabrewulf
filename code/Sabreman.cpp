@@ -37,7 +37,7 @@ Sabreman::Sabreman (const QGAMES::Forms& f, const QGAMES::Entity::Data& d)
 }
 
 // ---
-bool Sabreman::canMove (const QGAMES::Vector& d, const QGAMES::Vector& a) const
+bool Sabreman::canMove (const QGAMES::Vector& d, const QGAMES::Vector& a)
 {
 	assert (_currentMovement);
 	assert (_currentForm);

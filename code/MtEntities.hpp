@@ -89,7 +89,7 @@ class SabreWulfMonster : public QGAMES::Artist
 	/** To determinate whether the monster can or not move.
 		If the monster is in one of the moving zones and the potential next 
 		movements also, the movemenet is possible. */
-	virtual bool canMove (const QGAMES::Vector& d, const QGAMES::Vector& a) const;
+	virtual bool canMove (const QGAMES::Vector& d, const QGAMES::Vector& a);
 
 	/** @see parent. */
 	virtual QGAMES::Rectangle collisionZone () const;

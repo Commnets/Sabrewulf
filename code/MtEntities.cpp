@@ -37,7 +37,7 @@ SabreWulfMonster::SabreWulfMonster (int id, const QGAMES::Forms& f, const QGAMES
 }
 
 // ---
-bool SabreWulfMonster::canMove (const QGAMES::Vector& d, const QGAMES::Vector& a) const
+bool SabreWulfMonster::canMove (const QGAMES::Vector& d, const QGAMES::Vector& a)
 {
 	assert (_map);
 	assert (_behaviour);
