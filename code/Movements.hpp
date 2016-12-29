@@ -22,6 +22,8 @@ class SabreWulfArtistMovement : public QGAMES::MovementOneByOne
 
 	virtual QGAMES::Vector direction () const
 							{ return (QGAMES::Vector::_cero); }
+	virtual QGAMES::Vector acceleration () const
+							{ return (QGAMES::Vector::_cero); }
 
 	private:
 	virtual void moveOne (const QGAMES::Vector& d, const QGAMES::Vector& a, 
