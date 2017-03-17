@@ -2,8 +2,17 @@
 #include "Sabrewulf.hpp"
 #include "Game.hpp"
 
-// ---
-int _tmain (int argc, _TCHAR* argv[])
+#ifndef _CONSOLE
+#include <SDL.h>
+#ifdef __cplusplus
+#define C_LINKAGE "C"
+#else
+#define C_LINKAGE
+#endif /* __cplusplus */
+extern C_LINKAGE int main (int argc, char *argv [])
+#else
+int _tmain (int argc, char *argv [])
+#endif /* _CONSOLE */
 {
 	SabreWulfMaze::_data.initialize ();
 
