@@ -153,9 +153,9 @@ std::map <int, SabreWulfScene::Path> SabreWulfScene::randomPathFrom
 	{
 		if ((mZ + _add [pR]) != mE)
 		{
-			// If there is a conexion between the entry point
+			// If there is a connection between the entry point
 			// ...and the next maze place randomically selected, then
-			// a conexion has been found and it will be added later!
+			// a connection has been found and it will be added later!
 			if (!(pResult = conexionBetween (mZ, p, mZ + _add [pR])).empty ())
 				found = true;
 		}
@@ -429,7 +429,7 @@ const SabreWulfScene::Locations& SabreWulfScene::calculateLocations (int mP)
 	// Every place can the player is in can be either a "PASS" or a "DECIDE" or an "EXIT" place.
 	// If it is a "DECIDE" place it means the plyer can decide to change
 	// the movement direction to other places...
-	// In an "EXIT" place the conexion with the next room happens
+	// In an "EXIT" place the connection with the next room happens
 	_allLocations [mP] = Locations (); // Clear...
 	std::vector <QGAMES::Rectangle> places = ((SabreWulfMazePlace*) _activeMap) -> spaces (mP);
 	for (int i = 0; i < (int) places.size (); i ++)
@@ -455,7 +455,7 @@ const SabreWulfScene::Locations& SabreWulfScene::calculateLocations (int mP)
 						{ nLoc._conexions [2] = loc._id; loc._conexions [0] = nLoc._id; }
 					if (jP & 1) // Down...and the other one by the up part (as a consequence)
 						{ nLoc._conexions [3] = loc._id; loc._conexions [1] = nLoc._id; }
-					// Other values mean no conexion exists!
+					// Other values mean no connection exists!
 					// One link allowed!
 
 					// The old location has to be also rectified!
@@ -619,7 +619,7 @@ std::vector <QGAMES::Position> SabreWulfScene::pathFrom (int mZ, const QGAMES::P
 		return (result);
 	}
 
-	// If not, try to look for a conexion between both points
+	// If not, try to look for a connection between both points
 	// Even in the case there are many locations for the same point
 	QGAMES::Position lPos = QGAMES::Position::_cero;
 
@@ -630,8 +630,8 @@ std::vector <QGAMES::Position> SabreWulfScene::pathFrom (int mZ, const QGAMES::P
 	SabreWulfScene::Location loc1 = locs [locIds1 [0]]; // The initial loc is one where p1 is...
 	SabreWulfScene::Location locE; // Let's try to determinate the next location...
 	
-	// Iterate over the conexions of the initial location, loking for a conexion between both locs
-	// As the method is recursive, a list with all locations alredy tested for conexion
+	// Iterate over the conexions of the initial location, loking for a connection between both locs
+	// As the method is recursive, a list with all locations alredy tested for connection
 	// is kept, and passed to the next invokation, to avoid they will repeated
 	// and then generate a deadlock...
 	for (int j = 0; j < 4 && !found; j++)
@@ -642,15 +642,15 @@ std::vector <QGAMES::Position> SabreWulfScene::pathFrom (int mZ, const QGAMES::P
 			std::vector <int> nlE; 
 			std::copy (lE.begin (), lE.end (), std::back_inserter (nlE));
 			nlE.push_back (locIds1 [0]);
-			// If there is conexion path valid comming from the recursive call, then it is valid!
+			// If there is connection path valid comming from the recursive call, then it is valid!
 			locE = locs [loc1._conexions [j]]; // This is the next location potentially!...
 			lPos = locE._zone.center (); // ...and the point to go is the center of it
 			if (!(pResult = pathFrom (mZ, lPos, p2, nlE)).empty ())
-				found = true; // The conexion was found...
+				found = true; // The connection was found...
 		}
 	}
 
-	// If a conexion between entry and exit point has been reached
+	// If a connection between entry and exit point has been reached
 	// The the partial result is add to the final result
 	if (found)
 	{
@@ -693,7 +693,7 @@ std::vector <QGAMES::Position> SabreWulfScene::conexionBetween
 	else if ((mZ1 - mZ2) == __NUMBEROFMAZEPLACESX__) // mZ2 is in the upper side...
 		eT = SabreWulfScene::Location::_UPE;
 
-	// No possibilities of having some type of conexion...
+	// No possibilities of having some type of connection...
 	if (eT == SabreWulfScene::Location::_NONE)
 		return (std::vector <QGAMES::Position> ());
 

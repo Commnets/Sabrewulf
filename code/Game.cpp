@@ -10,6 +10,7 @@
 #include "GameStates.hpp"
 #include "InputHandler.hpp"
 #include "Defs.hpp"
+#include <Common/resourcesreader.hpp>
 #include <SDL/sdlformbuilder.hpp>
 #include <SDL/sdlsoundbuilder.hpp>
 #include <iostream>
@@ -29,6 +30,14 @@ SabreWulfGame::SabreWulfGame ()
 	  _counterPerSecond (0),
 	  _n (0)
 { 
+#ifdef NDEBUG
+	// If the data parameter exists, then changes the default temporal file...
+	// It makes sen se only when running release version of the app!
+	if (dynamic_cast <QGAMES::InZipResourceReader*> (QGAMES::ResourceReader::resourceReader ()) != NULL)
+		((QGAMES::InZipResourceReader*) QGAMES::ResourceReader::resourceReader ()) -> 
+			setTempLocation (parameter (std::string (__GAME_DATADIRPROPERTYNAME__)));
+#endif
+
 	// Creates the levels...
 	_levels.resize (3);
 	
@@ -407,6 +416,7 @@ QGAMES::Screens SabreWulfGame::createScreens ()
 	QGAMES::Screens r;
 	SDLScreen* scr = new SDLScreen (__GAMESNAME__, 
 		 QGAMES::Position (0,0), __SCREENWIDTH__, __SCREENHEIGHT__, __SCREENXPOS__, __SCREENYPOS__);
+	scr -> windowAtCenter ();
 	r.insert (QGAMES::Screens::value_type (__QGAMES_MAINSCREEN__, scr));
 	return (r); 
 }

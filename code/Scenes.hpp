@@ -133,7 +133,7 @@ class SabreWulfScene : public QGAMES::Scene
 	/** To determinate the path from position in a maze place number
 		going to another maze place. The result could be an empty set. */
 	std::vector <QGAMES::Position> conexionBetween (int mZ1, const QGAMES::Position& p, int mZ2);
-	/** To determinate wheter a maze place has or not conexion with other. */
+	/** To determinate wheter a maze place has or not connection with other. */
 	bool isThereConexionBetween (int mZ1, const QGAMES::Position& p, int mZ2)
 							{ return (!conexionBetween (mZ1, p, mZ2).empty ()); }
 	/** To determinate a ramdom path within a maze place. */
