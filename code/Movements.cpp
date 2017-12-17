@@ -1,6 +1,4 @@
 #include "Movements.hpp"
-#include <Common/entity.hpp>
-#include <iostream>
 
 // ---
 QGAMES::Movement* SabreWulfArtistMovement::clone ()

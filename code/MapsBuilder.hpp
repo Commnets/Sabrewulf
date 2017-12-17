@@ -4,7 +4,7 @@
 #ifndef __MAPSBUILDER_HPP__
 #define __MAPSBUILDER_HPP__
 
-#include <Arcade/mapbuilder.hpp>
+#include <Arcade/arcadeinclude.hpp>
 
 /** An adds on to the map builder for sabrewulf. */
 class MapsBuilderAddsOn : public QGAMES::ObjectMapBuilderAddsOn
@@ -15,7 +15,7 @@ class MapsBuilderAddsOn : public QGAMES::ObjectMapBuilderAddsOn
 							{ }
 
 	private:
-	virtual QGAMES::Map* createMap (int id, int w, int h, 
+	virtual QGAMES::Map* createMap (int id, int w, int h, int d,
 		const QGAMES::Layers& l, const QGAMES::MapProperties& pties);
 };
 

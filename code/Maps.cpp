@@ -1,13 +1,11 @@
 #include "Maps.hpp"
 #include "Sabrewulf.hpp"
 #include "Game.hpp"
-#include <algorithm>
-#include <assert.h>
 
 // ---
 SabreWulfMazePlace::SabreWulfMazePlace (int c, const QGAMES::Layers& l, int w, int h,
 	const QGAMES::MapProperties& p)
-	: QGAMES::ObjectMap (c, l, w, h, p),
+	: QGAMES::ObjectMap (c, l, w, 0, h, p),
 	  _mazePlaceNumber (__FIRSTMAZEPLACE__),
 	  _limits (),
 	  _emptySpaces (),

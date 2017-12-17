@@ -3,33 +3,6 @@
 #include "Game.hpp"
 #include "Sabreman.hpp"
 #include "Defs.hpp"
-#include <Arcade/arcadegame.hpp>
-#include <iostream>
-
-// ---
-void InputHandler::treatKeyboardStatus (const unsigned __int8* k)
-{
-	if (_game -> activeState () -> type () == __SABREWULFPLAYINGSTATE__)
-	{
-		// If the device to control the main character is the joystick, nothing to do here...
-		// Keyboard and joystick can not be active at the same time when playing
-		// The reason is, no action in any of them generates a no movement of the main character
-		// This method is call after processing any event, including keyboard events
-		// So, if the joystick is being used to move the character, and a movement is generated
-		// when the system enters this method, and the keyboard is not in use, the movement finishes...
-		if (_joystick)
-			return; 
-
-		int dX = 0; int dY = 0;
-		if (k [SDL_SCANCODE_S]) dX = 1;
-		if (k [SDL_SCANCODE_A]) dX = -1;
-		if (k [SDL_SCANCODE_L]) dY = 1;
-		if (k [SDL_SCANCODE_P]) dY = -1;
-		((SabreWulfWorld*) (((SabreWulfGame*) _game) -> activeWorld ())) 
-			-> moveCharacter (QGAMES::Vector (__BD dX, __BD dY, __BD 0));
-		// If no key is pressed the character stops!
-	}
-}
 
 // ---
 void InputHandler::onJoystickAxisMoveEvent (QGAMES::JoystickMovementEventData* dt)
@@ -65,7 +38,7 @@ void InputHandler::onJoystickAxisMoveEvent (QGAMES::JoystickMovementEventData* d
 			{
 				if (dt -> _deadLine > 0)
 				{
-					if (dt -> _deadLine > (maxPosJoystick (dt -> _numberAxis) / 4))
+					if (dt -> _deadLine > (game () -> inputHandler () -> maxPosJoystick (dt -> _numberAxis) / 4))
 						_mX += (_mX < 1) ? 1 : 0;
 					else
 						_mX -= (_mX > 0) ? 1 : 0;
@@ -73,7 +46,7 @@ void InputHandler::onJoystickAxisMoveEvent (QGAMES::JoystickMovementEventData* d
 				else
 				if (dt -> _deadLine < 0)
 				{
-					if (dt -> _deadLine < (minPosJoystick (dt -> _numberAxis) / 4))
+					if (dt -> _deadLine < (game () -> inputHandler () -> minPosJoystick (dt -> _numberAxis) / 4))
 						_mX += (_mX > -1) ? -1 : 0;
 					else
 						_mX -= (_mX < 0) ? -1 : 0;
@@ -85,7 +58,7 @@ void InputHandler::onJoystickAxisMoveEvent (QGAMES::JoystickMovementEventData* d
 			{
 				if (dt -> _deadLine > 0)
 				{
-					if (dt -> _deadLine > (maxPosJoystick (dt -> _numberAxis) / 4))
+					if (dt -> _deadLine > (game () -> inputHandler () -> maxPosJoystick (dt -> _numberAxis) / 4))
 						_mY += (_mY < 1) ? 1 : 0;
 					else
 						_mY -= (_mY > 0) ? 1 : 0;
@@ -93,7 +66,7 @@ void InputHandler::onJoystickAxisMoveEvent (QGAMES::JoystickMovementEventData* d
 				else
 				if (dt -> _deadLine < 0)
 				{
-					if (dt -> _deadLine < (minPosJoystick (dt -> _numberAxis) / 4))
+					if (dt -> _deadLine < (game () -> inputHandler () -> minPosJoystick (dt -> _numberAxis) / 4))
 						_mY += (_mY > -1) ? -1 : 0;
 					else
 						_mY -= (_mY < 0) ? -1 : 0;
@@ -114,7 +87,7 @@ void InputHandler::onJoystickAxisMoveEvent (QGAMES::JoystickMovementEventData* d
 				SabreWulfSelectionState* st = (SabreWulfSelectionState*) _game -> activeState ();
 				if (dt -> _deadLine > 0)
 				{
-					if (dt -> _deadLine > (maxPosJoystick (dt -> _numberAxis) / 4))
+					if (dt -> _deadLine > (game () -> inputHandler () -> maxPosJoystick (dt -> _numberAxis) / 4))
 						_dJ += (_dJ < 1) ? 1 : 0;
 					else
 						_dJ -= (_dJ > 0) ? 1 : 0;
@@ -122,7 +95,7 @@ void InputHandler::onJoystickAxisMoveEvent (QGAMES::JoystickMovementEventData* d
 				else
 				if (dt -> _deadLine < 0)
 				{
-					if (dt -> _deadLine < (minPosJoystick (dt -> _numberAxis) / 4))
+					if (dt -> _deadLine < (game () -> inputHandler () -> minPosJoystick (dt -> _numberAxis) / 4))
 						_dJ += (_dJ > -1) ? -1 : 0;
 					else
 						_dJ -= (_dJ < 0) ? -1 : 0;
@@ -203,7 +176,7 @@ void InputHandler::onKeyboardEvent (QGAMES::KeyboardEventData* dt)
 		}
 	}
 	else
-		_lastKey = dt -> _key;
+		_lastKey = dt -> _internalCode;
 
 	if (pKey)
 	{
@@ -256,27 +229,27 @@ void InputHandler::onMouseButtonEvent (QGAMES::MouseButtonEventData* dt)
 	switch (gS)
 	{
 		case __SABREWULFDEMOSTATE__:
-			if (dt -> _button == SDL_BUTTON_LEFT && !dt -> _on)
+			if (dt -> _button == QGAMES::MouseButtonCode::QGAMES_BUTTONLEFT && !dt -> _on)
 				((SabreWulfDemoState*) _game -> activeState ()) -> setWantToExit (true);
 			break;
 
 		case __SABREWULFENDSTATE__:
-			if (dt -> _button == SDL_BUTTON_LEFT && !dt -> _on)
+			if (dt -> _button == QGAMES::MouseButtonCode::QGAMES_BUTTONLEFT && !dt -> _on)
 				((SabreWulfEndState*) _game -> activeState ()) -> setWantToExit (true);
 			break;
 
 		case __SABREWULFWINSTATE__:
-			if (dt -> _button == SDL_BUTTON_LEFT && !dt -> _on)
+			if (dt -> _button == QGAMES::MouseButtonCode::QGAMES_BUTTONLEFT && !dt -> _on)
 				((SabreWulfWinState*) _game -> activeState ()) -> setWantToExit (true);
 			break;
 
 		case __SABREWULFSELECTSTATE__:
-			if (dt -> _button == SDL_BUTTON_LEFT && !dt -> _on) // To select one option...
+			if (dt -> _button == QGAMES::MouseButtonCode::QGAMES_BUTTONLEFT && !dt -> _on) // To select an option...
 				((SabreWulfSelectionState*) _game -> activeState ()) -> optionSelected ();
 			break;
 
 		case __SABREWULFPLAYINGSTATE__:
-			if (dt -> _button == SDL_BUTTON_LEFT && !dt -> _on) // To pause / continue the game...
+			if (dt -> _button == QGAMES::MouseButtonCode::QGAMES_BUTTONLEFT && !dt -> _on) // To pause o continue the game...
 				_game -> isGamePaused () ? _game -> continueGame () : _game -> pauseGame ();
 			break;
 
@@ -286,21 +259,46 @@ void InputHandler::onMouseButtonEvent (QGAMES::MouseButtonEventData* dt)
 }
 
 // ---
+void InputHandler::onKeyboardStatus (const std::vector <bool>& kS)
+{
+	if (_game -> activeState () -> type () == __SABREWULFPLAYINGSTATE__)
+	{
+		// If the device to control the main character is the joystick, nothing to do here...
+		// Keyboard and joystick can not be active at the same time when playing
+		// The reason is, no action in any of them generates a no movement of the main character
+		// This method is call after processing any event, including keyboard events
+		// So, if the joystick is being used to move the character, and a movement is generated
+		// when the system enters this method, and the keyboard is not in use, the movement finishes...
+		if (_joystick)
+			return; 
+
+		int dX = 0; int dY = 0;
+		if (kS [QGAMES::KeyCode::QGAMES_S]) dX = 1;
+		if (kS [QGAMES::KeyCode::QGAMES_A]) dX = -1;
+		if (kS [QGAMES::KeyCode::QGAMES_L]) dY = 1;
+		if (kS [QGAMES::KeyCode::QGAMES_P]) dY = -1;
+		((SabreWulfWorld*) (((SabreWulfGame*) _game) -> activeWorld ())) 
+			-> moveCharacter (QGAMES::Vector (__BD dX, __BD dY, __BD 0));
+		// If no key is pressed the character stops!
+	}
+}
+
+// ---
 void InputHandler::manageKeyOnDemoState (int k)
 {
-	if (k == SDL_SCANCODE_RETURN)
+	if (k == QGAMES::KeyCode::QGAMES_RETURN)
 		((SabreWulfDemoState*) _game -> activeState ()) -> setWantToExit (true);
 }
 // ---
 void InputHandler::manakeKeyOnSelectionState (int k)
 {
-	if (k == SDL_SCANCODE_RETURN)
+	if (k == QGAMES::KeyCode::QGAMES_RETURN)
 		((SabreWulfSelectionState*) _game -> activeState ()) -> optionSelected ();
 	else
-	if (k == SDL_SCANCODE_DOWN)
+	if (k == QGAMES::KeyCode::QGAMES_DOWN)
 		((SabreWulfSelectionState*) _game -> activeState ()) -> nextOption ();
 	else
-	if (k == SDL_SCANCODE_UP)
+	if (k == QGAMES::KeyCode::QGAMES_UP)
 		((SabreWulfSelectionState*) _game -> activeState ()) -> previousOption ();
 }
 
@@ -309,33 +307,33 @@ void InputHandler::manakeKeyOnPlayingState (int k)
 {
 	SabreWulfWorld* w = (SabreWulfWorld*) (((SabreWulfGame*) _game) -> activeWorld ());
 	#ifndef NDEBUG
-	if (k == SDL_SCANCODE_LEFT || 
-		k == SDL_SCANCODE_RIGHT ||
-		k == SDL_SCANCODE_UP ||
-		k == SDL_SCANCODE_DOWN) // Just to move a maze place more or less...
+	if (k == QGAMES::KeyCode::QGAMES_LEFT || 
+		k == QGAMES::KeyCode::QGAMES_RIGHT ||
+		k == QGAMES::KeyCode::QGAMES_UP ||
+		k == QGAMES::KeyCode::QGAMES_DOWN) // Just to move a maze place more or less...
 	{
 		int rN = w -> mazePlaceNumber () + 
-			((k == SDL_SCANCODE_LEFT) 
-				? -1 : ((k == SDL_SCANCODE_RIGHT) 
-					? 1 : ((k == SDL_SCANCODE_UP) 
+			((k == QGAMES::KeyCode::QGAMES_LEFT) 
+				? -1 : ((k == QGAMES::KeyCode::QGAMES_RIGHT) 
+					? 1 : ((k == QGAMES::KeyCode::QGAMES_UP) 
 						? -__NUMBEROFMAZEPLACESX__ : __NUMBEROFMAZEPLACESX__)));
 		if (rN >= __NUMBEROFMAZEPLACES__) rN = 0;
 		if (rN < 0) rN = __NUMBEROFMAZEPLACES__ - 1;
 		w -> setMazePlaceNumber (rN);
 	}
 	else
-	if (k == SDL_SCANCODE_X) // Just to activate the lines defining the limits of the map...
+	if (k == QGAMES::KeyCode::QGAMES_X) // Just to activate the lines defining the limits of the map...
 		((SabreWulfGame*) _game) -> onOffDrawLimits ();
 	else
 	#endif
-	if (k == SDL_SCANCODE_Z) // To pause/continue the game...
+	if (k == QGAMES::KeyCode::QGAMES_Z) // To pause/continue the game...
 	{
 		_game -> isGamePaused () ? _game -> continueGame () : _game -> pauseGame ();
 		if (_game -> isGamePaused ()) QGAMES::SoundSystem::system () -> pause ();
 		else QGAMES::SoundSystem::system () -> resume (); // Stops all sounds whilst pause is set!
 	}
 	else
-	if (k == SDL_SCANCODE_SPACE) // This is a switch to activate or desactivate fighting...
+	if (k == QGAMES::KeyCode::QGAMES_SPACE) // This is a switch to activate or desactivate fighting...
 	{
 		if (((SabreWulfGame*) _game) -> isFighting ())
 			((SabreWulfGame*) _game) -> noFight (); 
@@ -347,13 +345,13 @@ void InputHandler::manakeKeyOnPlayingState (int k)
 // ---
 void InputHandler::manakeKeyOnEndState (int k)
 {
-	if (k == SDL_SCANCODE_RETURN)
+	if (k == QGAMES::KeyCode::QGAMES_RETURN)
 		((SabreWulfEndState*) _game -> activeState ()) -> setWantToExit (true);
 }
 
 // ---
 void InputHandler::manakeKeyOnWinState (int k)
 {
-	if (k == SDL_SCANCODE_RETURN)
+	if (k == QGAMES::KeyCode::QGAMES_RETURN)
 		((SabreWulfWinState*) _game -> activeState ()) -> setWantToExit (true);
 }

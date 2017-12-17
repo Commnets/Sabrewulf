@@ -4,8 +4,6 @@
 #include "Scenes.hpp"
 #include "InputHandler.hpp"
 #include "Sabreman.hpp"
-#include <sstream>
-#include <math.h>
 
 // ---
 SabreWulfPresentationText::SabreWulfPresentationText (const std::string& t)
@@ -112,7 +110,7 @@ void SabreWulfIntroState::drawOn (QGAMES::Screen* s)
 // ---
 void SabreWulfIntroState::onExit ()
 {
-	delete _text;
+	delete (_text);
 	// The music stops...if any...
 	_game -> sound (__SABREWULFSTARTMUSIC__) -> stop ();
 }
@@ -192,7 +190,7 @@ void SabreWulfSelectionState::optionSelected ()
 		if (++_currentOptionLevel >= __SABREWULFNUMBEROFLEVELS__)
 			_currentOptionLevel = 0;
 		_options [2] = _optionLevels [_currentOptionLevel];
-		delete _optionGraphics [2];
+		delete (_optionGraphics [2]);
 		_optionGraphics [2] = new SabreWulfPresentationText (_options [2]);
 		_optionGraphics [2] -> setSpace (0);
 	}

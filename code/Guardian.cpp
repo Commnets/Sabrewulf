@@ -4,9 +4,11 @@
 SabreWulfGuardian::SabreWulfGuardian (const QGAMES::Forms& f, const QGAMES::Entity::Data& d)
 	: QGAMES::Artist (__SABREWULFGUARDIAN__, f, d),
 	  _moves (false),
-	  _visible (false),
 	  _counter (0), _cAspect (0), _posMoved (0)
 {
+	// Invisible by default...
+	setVisible (false);
+
 	// Nothing esl so far...
 }
 
@@ -29,7 +31,7 @@ void SabreWulfGuardian::initialize ()
 
 	// By default, the guardian neither moves nor is visible..
 	_moves = false;
-	_visible = false;
+	setVisible (false);
 
 	// The guardian has an initial position...
 	// That position will be determinated when the player enters the exit maze place
@@ -53,7 +55,7 @@ void SabreWulfGuardian::initialize ()
 void SabreWulfGuardian::updatePositions ()
 {
 	// If the guardian is not visible, this method doesn't do anything...
-	if (!_visible)
+	if (!isVisible ())
 		return;
 
 	// Moves the guardian if it is needed...
@@ -77,8 +79,6 @@ void SabreWulfGuardian::updatePositions ()
 // ---
 void SabreWulfGuardian::drawOn (QGAMES::Screen* s, const QGAMES::Position& p)
 {
-	if (!_visible)
-		return;
 	QGAMES::Artist::drawOn (s, p);
 }
 

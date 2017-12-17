@@ -4,7 +4,7 @@
 #ifndef __WORLDSBUILDER_HPP__
 #define __WORLDSBUILDER_HPP__
 
-#include <Arcade/worldbuilder.hpp>
+#include <Arcade/arcadeinclude.hpp>
 
 /** Class addson to build the worlds of the sabrewulf. Just one!. */
 class WorldsBuilder : public QGAMES::WorldBuilder
@@ -17,8 +17,9 @@ class WorldsBuilder : public QGAMES::WorldBuilder
 	private:
 	virtual QGAMES::World* createWorldObject (int no, const QGAMES::Scenes& s, 
 		const QGAMES::WorldProperties& p);
-	virtual QGAMES::Scene* createSceneObject (int ns, const QGAMES::Maps& m, const QGAMES::Scenes& cn, 
-		const QGAMES::SceneProperties& p, const QGAMES::EntitiesPerLayer& ePL);
+	virtual QGAMES::Scene* createSceneObject (int ns, const QGAMES::Maps& m, 
+		const QGAMES::Scene::Connections& cn, const QGAMES::SceneProperties& p, 
+		const QGAMES::EntitiesPerLayer& ePL);
 };
 
 #endif

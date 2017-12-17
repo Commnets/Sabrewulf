@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Sabrewulf.hpp"
 #include "Game.hpp"
-#include <Common/resourcesreader.hpp>
 
 #ifndef _CONSOLE
 #include <SDL.h>

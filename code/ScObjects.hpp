@@ -4,12 +4,10 @@
 #ifndef __SCENTITIES_HPP__
 #define __SCENTITIES_HPP__
 
-#include <Common/entity.hpp>
-#include <Common/rectangle.hpp>
-#include <Arcade/artist.hpp>
 #include "Worlds.hpp"
 #include "SabreWulf.hpp"
 #include "Defs.hpp"
+#include <Arcade/arcadeinclude.hpp>
 
 /** Class to represent the frame around all the information about the game. */
 class SabreWulfScoreFrame : public QGAMES::ScoreObject

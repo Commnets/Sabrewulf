@@ -4,8 +4,8 @@
 #ifndef __ENTITIES_HPP__
 #define __ENTITIES_HPP__
 
-#include <Arcade/artist.hpp>
 #include "Defs.hpp"
+#include <Arcade/arcadeinclude.hpp>
 
 class SabreWulfMonster;
 class SabreWulfInmortal;
@@ -63,12 +63,10 @@ class Sabreman : public QGAMES::Artist
 	bool isInmortal () const
 							{ return (!canDie ()); }
 
-	/** To know whether the sabreman is or not visible now. */
-	bool isVisible () const
-							{ return (_isVisible); }
-	/** To activate or desactivate if the sabreman is visible.  
+	/** @see parent.
+		To activate or desactivate if the sabreman is visible.  
 		It is used when the game is in some states. */
-	void setVisible (bool v);
+	virtual void setVisible (bool v);
 	/** To know the last orientation when move. */
 	const QGAMES::Vector& lastOrientation () const
 							{ return (_lastMov); }
@@ -101,8 +99,6 @@ class Sabreman : public QGAMES::Artist
 	bool isMonsterCommingBack (SabreWulfMonster* mt);
 
 	private:
-	/** To determinate whether the playe is or not visible. */
-	bool _isVisible;
 	/** To determinate whether the player is or not fighting. */
 	bool _fighting;
 	/** To determinate the status of the player.

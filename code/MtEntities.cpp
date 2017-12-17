@@ -4,8 +4,6 @@
 #include "Game.hpp"
 #include "Maps.hpp"
 #include "Scenes.hpp"
-#include <Arcade/arcadegame.hpp>
-#include <iostream>
 
 // ---
 SabreWulfMonster::State SabreWulfMonster::Behaviour::newState ()
@@ -105,17 +103,6 @@ void SabreWulfMonster::setMazePlaceNumber (int mP)
 }
 
 // ---
-bool SabreWulfMonster::isVisible ()
-{
-	assert (_map); // The map has to exists...
-	// The monster is visible just only when the maze place number where the
-	// entity is in is the same than the map is currently representing, and the
-	// monster is also alive. The inmortals are always alive!
-	return (((SabreWulfMazePlace*) map ()) -> mazePlaceNumber () == _mazePlaceNumber &&
-		_state != SabreWulfMonster::State::__NOTALIVE);
-}
-
-// ---
 void SabreWulfMonster::setState (SabreWulfMonster::State s)
 {
 	_state = s;
@@ -192,6 +179,17 @@ void SabreWulfMonster::initializeAs (SabreWulfMonster::Aspect a, int mP,
 }
 
 // ---
+void SabreWulfMonster::inEveryLoop ()
+{
+	// Sets whether the monster is or not visible...
+	// It is something to be done in every iteration because the monster (all types)
+	// moves across differents maze places...
+	setVisible (((SabreWulfMazePlace*) map ()) -> mazePlaceNumber () == _mazePlaceNumber &&
+		_state != SabreWulfMonster::State::__NOTALIVE);
+	QGAMES::Artist::inEveryLoop ();
+}
+
+// ---
 void SabreWulfMonster::updatePositions ()
 {
 	// The monster updates even when it is not visible...
@@ -259,10 +257,9 @@ void SabreWulfMonster::updatePositions ()
 // ---
 void SabreWulfMonster::drawOn (QGAMES::Screen* s, const QGAMES::Position& p)
 {
-	if (!isVisible ()) return; // If it is not visible there is nothing to draw...
 	QGAMES::Artist::drawOn (s, p);
-	assert (_behaviour);
-	_behaviour -> drawOn (s, p); // Draws something special relative to the behaviour...
+	if (_behaviour)
+		_behaviour -> drawOn (s, p); // Draws something special relative to the behaviour...
 }
 
 // ---
@@ -423,7 +420,7 @@ void SabreWulfNastie::initializeAs (SabreWulfMonster::Aspect a, int mP,
 	setState (SabreWulfMonster::State::_WAITING);
 	// In the case of a nastie, waiting forms and not alive forms are the same!
 
-	if (_behaviour) delete _behaviour; // Deletes a previous behaviour...
+	if (_behaviour) delete (_behaviour); // Deletes a previous behaviour...
 	_behaviour = (a == _FIRE) 
 		? new FireBehaviour (this, _sabreman) : new NastieBehaviour (this, _sabreman);
 
@@ -810,7 +807,7 @@ void SabreWulfInmortal::initializeAs (SabreWulfMonster::Aspect a,
 		? SabreWulfMonster::State::_WAITING : SabreWulfMonster::State::_MOVING);
 
 	// Additional initializations for specific monsters...
-	if (_behaviour) delete _behaviour;
+	if (_behaviour) delete (_behaviour);
 	switch (_aspect)
 	{
 		case _RHINOLEFT:

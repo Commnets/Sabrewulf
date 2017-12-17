@@ -4,10 +4,10 @@
 #ifndef __MTENTITIES_HPP__
 #define __MTENTITIES_HPP__
 
-#include <Arcade/artist.hpp>
 #include "Sabreman.hpp"
 #include "Scenes.hpp"
 #include "Defs.hpp"
+#include <Arcade/arcadeinclude.hpp>
 
 /** This class defines a monster. */
 class SabreWulfMonster : public QGAMES::Artist
@@ -104,9 +104,6 @@ class SabreWulfMonster : public QGAMES::Artist
 	/** To set where the monster is. */
 	void setMazePlaceNumber (int mP);
 
-	/** To know whether the monster is or not visible now. */
-	bool isVisible ();
-
 	// To control the aspect of the monster.
 	// The invocations cames always from outside
 	/** To know the aspect the mosnter has now. */
@@ -130,6 +127,7 @@ class SabreWulfMonster : public QGAMES::Artist
 
 	virtual void initialize ();
 	virtual void initializeAs (Aspect a, int mP, const QGAMES::Position& pos, Sabreman* s);
+	virtual void inEveryLoop ();
 	virtual void updatePositions ();
 	virtual void drawOn (QGAMES::Screen* s, const QGAMES::Position& p);
 

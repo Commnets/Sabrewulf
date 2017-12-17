@@ -4,12 +4,11 @@
 #ifndef __GAME_HPP__
 #define __GAME_HPP__
 
-#include <Arcade/arcadegame.hpp>
-#include "GameImplementation.hpp"
 #include "Sabreman.hpp"
 #include "MtEntities.hpp"
 #include "ObjEntities.hpp"
 #include "ScObjects.hpp"
+#include <Arcade/arcadeinclude.hpp>
 
 /** Class to represente Sabrewulf Game. */
 class SabreWulfGame : public QGAMES::ArcadeGame
@@ -129,12 +128,9 @@ class SabreWulfGame : public QGAMES::ArcadeGame
 
 	private:
 	// @see parent
-	virtual QGAMES::FormBuilder* createFormBuilder ();
-	virtual QGAMES::ObjectBuilder* createObjectBuilder ();
 	virtual QGAMES::EntityBuilder* createEntityBuilder ();
 	virtual QGAMES::MovementBuilder* createMovementBuilder ();
-	virtual QGAMES::SoundBuilder* createSoundBuilder ();
-	virtual QGAMES::Timer* createTimer ();
+	virtual QGAMES::InputHandler* createInputHandler ();
 	virtual QGAMES::Screens createScreens ();
 	virtual QGAMES::WorldBuilder* createWorldBuilder ();
 	virtual QGAMES::MapBuilder* createMapBuilder ();

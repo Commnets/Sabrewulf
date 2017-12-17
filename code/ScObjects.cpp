@@ -1,6 +1,5 @@
 #include "ScObjects.hpp"
 #include "Game.hpp"
-#include <sstream>
 
 // ---
 SabreWulfScoreFrame::SabreWulfScoreFrame ()

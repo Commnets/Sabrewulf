@@ -5,7 +5,7 @@
 #ifndef __EVENTS_HPP__
 #define __EVENTS_HPP__
 
-#include <Common/position.hpp>
+#include <Arcade/arcadeinclude.hpp>
 
 class SabreWulfInmortal;
 

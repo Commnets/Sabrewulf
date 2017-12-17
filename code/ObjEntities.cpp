@@ -3,15 +3,15 @@
 #include "Maps.hpp"
 #include "Game.hpp"
 #include "Maps.hpp"
-#include <Arcade/arcadegame.hpp>
-#include <iostream>
 
 // ---
 SabreWulfObject::SabreWulfObject (int id, const QGAMES::Forms& f, const QGAMES::Entity::Data& d)
 	: QGAMES::Artist (id, f, d),
-	  _counter (NULL),
-	  _visible (false)
+	  _counter (NULL)
 {
+	// Invisible by default...
+	setVisible (false);
+
 	// Nothing else to do so far...
 }
 
@@ -72,7 +72,7 @@ QGAMES::Rectangle SabreWulfObject::collisionZone () const
 	assert (_currentForm); // It has to have a form to calculate the size...
 	// If the object is not vislbe, then it has not collision zone,
 	// otherwise it will be determinated by its aspect!
-	return (_visible ? QGAMES::Rectangle (position (), 
+	return (isVisible () ? QGAMES::Rectangle (position (), 
 		position () + QGAMES::Vector (__BD _currentForm -> frameWidth (), 
 			__BD _currentForm -> frameHeight (), __BD 0)) : QGAMES::Rectangle::_noRectangle);
 }
@@ -81,7 +81,7 @@ QGAMES::Rectangle SabreWulfObject::collisionZone () const
 void SabreWulfObject::initialize ()
 {
 	_counter = NULL; // No aspect...
-	_visible = false; // Not visible!
+	setVisible (false); // Not visible!
 	setCurrentForm ((*_forms.begin ()).first); // The form is the basic one...
 	setCurrentAspect (0); // Same than the aspect...
 	QGAMES::Artist::initialize ();
@@ -97,8 +97,6 @@ void SabreWulfObject::updatePositions ()
 // ---
 void SabreWulfObject::drawOn (QGAMES::Screen* s, const QGAMES::Position& p)
 {
-	if (!_visible)
-		return; // If it is not visible, it is not drawn...
 	QGAMES::Artist::drawOn (s, p);
 }
 
@@ -122,7 +120,7 @@ void SabreWulfObject::whenCollisionWith (QGAMES::Entity* e)
 		if (_counter != NULL)
 		{
 			_counter -> _caught = true; // The base thing has been caught...
-			_visible = false; // from now on, the object is not longer visible...
+			setVisible (false); // from now on, the object is not longer visible...
 		}
 	}
 
@@ -134,7 +132,7 @@ void SabreWulfObject::setObjectAspect ()
 {
 	if (_counter == NULL)
 	{
-		_visible = false;
+		setVisible (false);
 		setCurrentForm ((*_forms.begin ()).first); // The form is the basic one...
 		setCurrentAspect (0); // Same than the aspect...
 		return; // No counter, not visible...
@@ -147,7 +145,7 @@ void SabreWulfObject::setObjectAspect ()
 	setPosition (_counter -> _position - 
 		QGAMES::Vector (__BD 0, __BD _currentForm -> frameHeight (), __BD 0));
 
-	_visible = !_counter -> _caught; 
+	setVisible (!_counter -> _caught); 
 	// If the object has not been caught already, then it will be visible...
 	// Otherwise it will be invisible!!
 }

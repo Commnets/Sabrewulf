@@ -4,7 +4,7 @@
 #ifndef __SCENES_HPP__
 #define __SCENES_HPP__
 
-#include <Arcade/scene.hpp>
+#include <Arcade/arcadeinclude.hpp>
 
 /** This class represents a sabrewulf scene.
 	This class is where the entities are moving. */
@@ -19,7 +19,7 @@ class SabreWulfScene : public QGAMES::Scene
 	};
 
 	// Constructors % Destructors
-	SabreWulfScene (const QGAMES::Maps& m, const QGAMES::Scenes& cn,
+	SabreWulfScene (const QGAMES::Maps& m, const QGAMES::Scene::Connections& cn,
 		const QGAMES::SceneProperties& p = QGAMES::SceneProperties (),
 		const QGAMES::EntitiesPerLayer& ePL = QGAMES::EntitiesPerLayer ());
 

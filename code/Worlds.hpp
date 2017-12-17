@@ -4,9 +4,9 @@
 #ifndef __WORLDS_HPP__
 #define __WORLDS_HPP__
 
-#include <Arcade/world.hpp>
 #include "Events.hpp"
 #include "Defs.hpp"
+#include <Arcade/arcadeinclude.hpp>
 
 class Sabreman;
 class Orchild;

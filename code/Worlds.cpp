@@ -5,9 +5,6 @@
 #include "Guardian.hpp"
 #include "Sabrewulf.hpp"
 #include "Game.hpp"
-#include <Arcade/arcadegame.hpp>
-#include <Arcade/artist.hpp>
-#include <iostream>
 
 // ---
 SabreWulfWorld::SabreWulfWorld (const QGAMES::Scenes& s, const QGAMES::WorldProperties& p)
@@ -535,7 +532,7 @@ void* SabreWulfWorld::ToChangeMazePlaceBuoy::treatFor (QGAMES::Element* e)
 	SabreWulfWorld* w = (SabreWulfWorld*) e;
 	w -> setMazePlaceNumber (_data -> _mazePlace);
 	w -> _mainCharacter -> setPosition (_data -> _position);
-	delete _data;
+	delete (_data);
 	_data = NULL; // The buoy has been treated...
 
 	return (this);
@@ -559,7 +556,7 @@ void* SabreWulfWorld::InmortalToChangeMazePlaceBuoy::treatFor (QGAMES::Element* 
 	SabreWulfWorld* w = (SabreWulfWorld*) e;
 	_data -> _inmortal -> setMazePlaceNumber (_data -> _mazePlace);
 	_data -> _inmortal -> setPosition (_data -> _position);
-	delete _data;
+	delete (_data);
 	_data = NULL; // The buoy has been treated...
 
 	return (this);

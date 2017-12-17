@@ -3,12 +3,10 @@
 #include "Movements.hpp"
 #include "Maps.hpp"
 #include "Game.hpp"
-#include <iostream>
 
 // ---
 Sabreman::Sabreman (const QGAMES::Forms& f, const QGAMES::Entity::Data& d) 
 	: QGAMES::Artist (__SABREWULFSABREMAN__, f, d),
-	  _isVisible (true),
 	  _fighting (false),
 	  _internalState (Sabreman::InternalState::_NORMAL),
 	  _amuletPieces (__NUMBEROFAMULETPIECES__),
@@ -31,7 +29,10 @@ Sabreman::Sabreman (const QGAMES::Forms& f, const QGAMES::Entity::Data& d)
 	  ,_onOffDrawLimits (true)
 	  #endif
 	  // ---
-{ 
+{
+	// Visible by default...
+	setVisible (true);
+
 	for (int i = 0; i < __NUMBEROFAMULETPIECES__; i++)
 		_amuletPieces [i] = false;
 }
@@ -236,7 +237,7 @@ bool Sabreman::couldDamage (SabreWulfInmortal* iM)
 // ---
 void Sabreman::setVisible (bool v)
 { 
-	_isVisible = v; 
+	QGAMES::Artist::setVisible (v);
 	if (_walkingSound)
 	{
 		_walkingSound = false;
@@ -256,7 +257,7 @@ void Sabreman::initialize ()
 {
 	QGAMES::Artist::initialize ();
 
-	_isVisible = true;
+	setVisible (true);
 
 	setFighting (false); // By default it is not fighting...
 	setInternalState (Sabreman::InternalState::_NORMAL); // Normal aspect by default...
@@ -287,7 +288,7 @@ void Sabreman::initialize ()
 void Sabreman::updatePositions ()
 {
 	// If Sabreman is not visible, he has not to be actualized!
-	if (!_isVisible)
+	if (!isVisible ())
 		return;
 
 	// Change the aspect of the character when it is moving...
@@ -458,11 +459,6 @@ void Sabreman::updatePositions ()
 // ---
 void Sabreman::drawOn (QGAMES::Screen* s, const QGAMES::Position& p)
 {
-	// If it is not visible...
-	// It has not been drawn...
-	if (!_isVisible)
-		return;
-
 	QGAMES::Artist::drawOn (s, p);
 
 	// While debug mode

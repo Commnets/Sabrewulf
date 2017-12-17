@@ -3,11 +3,9 @@
 #include "Defs.hpp"
 #include "Worlds.hpp"
 #include "Game.hpp"
-#include <Common/screen.hpp>
-#include <algorithm>
 
 // ---
-SabreWulfScene::SabreWulfScene (const QGAMES::Maps& m, const QGAMES::Scenes& cn,
+SabreWulfScene::SabreWulfScene (const QGAMES::Maps& m, const QGAMES::Scene::Connections& cn,
 		const QGAMES::SceneProperties& p, const QGAMES::EntitiesPerLayer& ePL)
 	: QGAMES::Scene (__SABREWULFSCENE__, m, cn, p, ePL),
 	  _mazePlaceNumber (__FIRSTMAZEPLACE__),
@@ -565,7 +563,11 @@ SabreWulfScene::Location SabreWulfScene::connectedLocationFor
 int SabreWulfScene::joinPositionBetween (const SabreWulfScene::Location& l1, 
 	const SabreWulfScene::Location& l2) const
 {
-	if (!l1._zone.strictIntersectWith (l2._zone))
+	if (!QGAMES::squareIntersectSquare (
+		l1._zone.pos1 ().posX (), l1._zone.pos2 ().posX (), 
+			l1._zone.pos1 ().posY (), l1._zone.pos2 ().posY (),
+		l2._zone.pos1 ().posX (), l2._zone.pos2 ().posX (), 
+			l2._zone.pos1 ().posY (), l2._zone.pos2 ().posY ()))
 		return (0); // No conexions...
 
 	// If there is an intersection...

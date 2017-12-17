@@ -4,9 +4,9 @@
 #ifndef __OENTITIES_HPP__
 #define __OENTITIES_HPP__
 
-#include <Arcade/artist.hpp>
 #include "Worlds.hpp"
 #include "Defs.hpp"
+#include <Arcade/arcadeinclude.hpp>
 
 /** This class describes the orchild.
 	The orchild appear in every room, but it status

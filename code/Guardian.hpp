@@ -4,8 +4,8 @@
 #ifndef __GUARDIAN_HPP__
 #define __GUARDIAN_HPP__
 
-#include <Arcade/artist.hpp>
 #include "Defs.hpp"
+#include <Arcade/arcadeinclude.hpp>
 
 /** This class describes the guardian of the ext door. 
 	It is really an object that can kill the player, but
@@ -27,12 +27,6 @@ class SabreWulfGuardian : public QGAMES::Artist
 	/** To know whether the guardian is or not moving. */
 	bool isMoving () const
 							{ return (_moves); }
-	/** To set the guardina visible or invisible. */
-	void setVisible (bool v)
-							{ _visible = v; }
-	/** To know whether the guardian is or not visble. */
-	bool isVisible () const
-							{ return (_visible); }
 
 	/** Guardian never move....automatically
 		His position will be change as sabreman carries the four amulet pieces. */
@@ -52,8 +46,6 @@ class SabreWulfGuardian : public QGAMES::Artist
 	private:
 	/** Defines whether the guardian moves or not. */
 	bool _moves;
-	/** Defines whether the guardian is or not visible. */
-	bool _visible;
 
 	// Implementation
 	int _counter; // To count positions when he moves

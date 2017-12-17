@@ -4,8 +4,8 @@
 #ifndef __MAPS_HPP__
 #define __MAPS_HPP__
 
-#include <Arcade/map.hpp>
 #include "Defs.hpp"
+#include <Arcade/arcadeinclude.hpp>
 
 class SabreWulfMazePlace : public QGAMES::ObjectMap
 {

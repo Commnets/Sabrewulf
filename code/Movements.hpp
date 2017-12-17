@@ -4,9 +4,8 @@
 #ifndef __MOVEMENTS_HPP__
 #define __MOVEMENTS_HPP__
 
-#include <Common/movement.hpp>
-#include <Arcade/layer.hpp>
 #include "Defs.hpp"
+#include <Arcade/arcadeinclude.hpp>
 
 /** The movement of sabreman and any other entity in the maze. */
 class SabreWulfArtistMovement : public QGAMES::MovementOneByOne

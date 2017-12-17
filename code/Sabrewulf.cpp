@@ -1,7 +1,6 @@
 #include "Sabrewulf.hpp"
 #include "OriginalData.hpp"
 #include "Defs.hpp"
-#include <algorithm>
 
 SabreWulfMaze SabreWulfMaze::_data = SabreWulfMaze ();
 

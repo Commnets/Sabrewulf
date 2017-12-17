@@ -4,8 +4,7 @@
 #ifndef __SABREWULF_HPP__
 #define __SABREWULF_HPP__
 
-#include <vector>
-#include <map>
+#include <Arcade/arcadeinclude.hpp>
 
 /** Sabrewulf original data is converted into
 	information that can be managed by the application.

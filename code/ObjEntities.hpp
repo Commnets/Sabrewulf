@@ -4,9 +4,9 @@
 #ifndef __OBJENTITIES_HPP__
 #define __OBJENTITIES_HPP__
 
-#include <Arcade/artist.hpp>
 #include "Worlds.hpp"
 #include "Defs.hpp"
+#include <Arcade/arcadeinclude.hpp>
 
 /** This class describes the objects.
 	The orchild appear in every room, but it status
@@ -28,9 +28,6 @@ class SabreWulfObject : public QGAMES::Artist
 
 	/** To know the type of object. */
 	Type type () const;
-	/** To know whether the object is or not visble. */
-	bool isVisible () const
-							{ return (_visible); }
 	/** To know which piece of the amulet th eobject is
 		just in case the object is an amulet!!.
 		Otherwise the number returned will be __MININT__ .*/
@@ -58,9 +55,6 @@ class SabreWulfObject : public QGAMES::Artist
 	private:
 	/** The counter the object is representing. */
 	SabreWulfWorld::ObjectCounter* _counter;
-
-	// Implementation
-	bool _visible;
 };
 
 #endif
