@@ -137,7 +137,7 @@ void SabreWulfGame::setLevel (int l)
 void SabreWulfGame::setJoystick (bool j)
 {
 	assert (_inputHandler);
-	((InputHandler*) _inputHandler) -> activateJoystick (j);
+	((InputHandler*) _inputHandler -> behaviour ()) -> activateJoystick (j);
 }
 
 // ---
