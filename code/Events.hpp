@@ -25,3 +25,6 @@ struct InmortalChangeMazePlaceEventData : public SabreWulfChangeMazePlaceEventDa
 };
 
 #endif
+  
+// End of the file
+/*@}*/
