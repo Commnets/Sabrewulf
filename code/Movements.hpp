@@ -15,7 +15,7 @@ class SabreWulfArtistMovement : public QGAMES::MovementOneByOne
 		: QGAMES::MovementOneByOne (id, v)
 							{ }
 
-	virtual Movement* clone ();
+	virtual Movement* clone () const;
 
 	virtual void initialize ();
 

@@ -22,7 +22,7 @@ class Sabreman : public QGAMES::Artist
 	Sabreman (const QGAMES::Forms& f = QGAMES::Forms (), 
 		const QGAMES::Entity::Data& d = QGAMES::Entity::Data ());
 
-	virtual Entity* clone ()
+	virtual Entity* clone () const
 							{ return (new Sabreman (_forms, _data)); }
 
 	/** To determinate whether the sabreman can or not move.

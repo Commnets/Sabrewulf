@@ -16,7 +16,7 @@ class SabreWulfScoreFrame : public QGAMES::ScoreObject
 	// Constructors
 	SabreWulfScoreFrame ();
 
-	virtual Entity* clone ()
+	virtual Entity* clone () const
 							{ return (new SabreWulfScoreFrame ()); }
 
 	/** To draw the frame. 
@@ -36,7 +36,7 @@ class SabreWulfEnergy : public QGAMES::ScoreObject
 	// Constructors
 	SabreWulfEnergy ();
 
-	virtual Entity* clone ()
+	virtual Entity* clone () const
 							{ return (new SabreWulfEnergy ()); }
 
 	/** To set the % of the bar of energy visible. */
@@ -67,7 +67,7 @@ class SabreWulfLives : public QGAMES::ScoreObject
 	// Constructors
 	SabreWulfLives ();
 
-	virtual Entity* clone ()
+	virtual Entity* clone () const
 							{ return (new SabreWulfLives ()); }
 
 	/** To set the number of lives. */
@@ -98,7 +98,7 @@ class SabreWulfTimeCounter : public QGAMES::ScoreObjectText
 		This entity is not created so far from an entity builder. */
 	SabreWulfTimeCounter ();
 
-	virtual Entity* clone ()
+	virtual Entity* clone () const
 							{ return (new SabreWulfTimeCounter ()); }
 
 	/** To convert a time passed as parameter in seconds,
@@ -122,7 +122,7 @@ class SabreWulfScoreCounter : public QGAMES::ScoreObjectNumber
 		This entity is not created so far from an entity builder. */
 	SabreWulfScoreCounter ();
 
-	virtual Entity* clone ()
+	virtual Entity* clone () const
 							{ return (new SabreWulfScoreCounter ()); }
 
 	protected:

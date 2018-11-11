@@ -18,7 +18,7 @@ class SabreWulfGuardian : public QGAMES::Artist
 	SabreWulfGuardian (const QGAMES::Forms& f = QGAMES::Forms (), 
 		const QGAMES::Entity::Data& d = QGAMES::Entity::Data ());
 
-	virtual Entity* clone ()
+	virtual Entity* clone () const
 							{ return (new SabreWulfGuardian (_forms, _data)); }
 
 	/** To move the guardian, or not */

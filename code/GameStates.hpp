@@ -14,7 +14,7 @@ class SabreWulfPresentationText : public QGAMES::ScoreObjectText
 	public:
 	SabreWulfPresentationText (const std::string& t = std::string (__NULL_STRING__));
 
-	virtual Entity* clone ()
+	virtual Entity* clone () const
 							{ return (new SabreWulfPresentationText (_text)); }
 
 	protected:
@@ -30,7 +30,7 @@ class SabreWulfLittlefPresentationText : public QGAMES::ScoreObjectText
 	public:
 	SabreWulfLittlefPresentationText (const std::string& t = std::string (__NULL_STRING__));
 
-	virtual Entity* clone ()
+	virtual Entity* clone () const
 							{ return (new SabreWulfLittlefPresentationText (_text)); }
 
 	protected:

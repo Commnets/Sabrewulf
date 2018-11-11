@@ -23,7 +23,7 @@ class SabreWulfObject : public QGAMES::Artist
 	SabreWulfObject (int id, const QGAMES::Forms& f = QGAMES::Forms (), 
 		const QGAMES::Entity::Data& d = QGAMES::Entity::Data ());
 
-	virtual Entity* clone ()
+	virtual Entity* clone () const
 							{ return (new SabreWulfObject (_id, _forms, _data)); }
 
 	/** To know the type of object. */

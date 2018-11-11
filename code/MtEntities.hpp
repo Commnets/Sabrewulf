@@ -196,7 +196,7 @@ class SabreWulfNastie : public SabreWulfMonster
 	SabreWulfNastie (int id, const QGAMES::Forms& f = QGAMES::Forms (), 
 		const QGAMES::Entity::Data& d = QGAMES::Entity::Data ());
 
-	virtual Entity* clone ()
+	virtual Entity* clone () const
 							{ return (new SabreWulfNastie (_id, _forms, _data)); }
 
 	virtual bool isNastie () const
@@ -306,7 +306,7 @@ class SabreWulfInmortal : public SabreWulfMonster
 	SabreWulfInmortal (int id, const QGAMES::Forms& f = QGAMES::Forms (), 
 		const QGAMES::Entity::Data& d = QGAMES::Entity::Data ());
 
-	virtual Entity* clone ()
+	virtual Entity* clone () const
 							{ return (new SabreWulfInmortal (_id, _forms, _data)); }
 
 	virtual bool isNastie () const

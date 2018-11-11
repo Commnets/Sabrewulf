@@ -1,7 +1,7 @@
 #include "Movements.hpp"
 
 // ---
-QGAMES::Movement* SabreWulfArtistMovement::clone ()
+QGAMES::Movement* SabreWulfArtistMovement::clone () const
 {
 	QGAMES::Movement* result = new SabreWulfArtistMovement (_id, _variables); 
 	result -> initialize (); 

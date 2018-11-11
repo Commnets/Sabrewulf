@@ -21,7 +21,7 @@ class Orchild : public QGAMES::Artist
 	Orchild (const QGAMES::Forms& f = QGAMES::Forms (), 
 		const QGAMES::Entity::Data& d = QGAMES::Entity::Data ());
 
-	virtual Entity* clone ()
+	virtual Entity* clone () const
 							{ return (new Orchild (_forms, _data)); }
 
 	/** To know whether the orchild is or not already big.
