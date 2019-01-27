@@ -74,7 +74,7 @@ class SabreWulfScene : public QGAMES::Scene
 	// Implementation
 	/** An structure to identify the different locations
 		within the maze place, and where the entities can move in. */
-	typedef struct Location
+	struct Location
 	{
 		Location ()
 			: _id (-1), _zone (QGAMES::Rectangle::_noRectangle), 
