@@ -104,7 +104,7 @@ void SabreWulfIntroState::drawOn (QGAMES::Screen* s)
 	// Write down the text, next to the logo...
 	_text -> setAlphaLevel (_counterAlpha);
 	_text -> drawOn (s, lPos + QGAMES::Position (__BD (_logo -> frameWidth () + 20), 
-		__BD ((_logo -> frameHeight () - _text -> height ()) >> 1), __BD 0));
+		__BD ((_logo -> frameHeight () - _text -> visualHeight ()) >> 1), __BD 0));
 }
 
 // ---
@@ -633,11 +633,11 @@ void SabreWulfAmuletState::drawOn (QGAMES::Screen* s)
 	_textGot -> setMaxTextLength (tGot.length ());
 	_textGot -> setText (tGot);
 	_textGot -> drawOn (s, QGAMES::Position 
-		(__BD ((__SCREENWIDTH__ - _textGot -> width ()) >> 1), __BD 360, __BD 0));
+		(__BD ((__SCREENWIDTH__ - _textGot -> visualLength ()) >> 1), __BD 360, __BD 0));
 	_textPending -> setMaxTextLength (tPending.length ());
 	_textPending -> setText (tPending);
 	_textPending -> drawOn (s, QGAMES::Position 
-		(__BD ((__SCREENWIDTH__ - _textPending -> width ()) >> 1), __BD 380, __BD 0));
+		(__BD ((__SCREENWIDTH__ - _textPending -> visualLength ()) >> 1), __BD 380, __BD 0));
 }
 
 // ---
@@ -901,9 +901,9 @@ void SabreWulfEndState::drawOn (QGAMES::Screen* s)
 {
 	// Draws the text...
 	_textEndGame -> drawOn (s, QGAMES::Position 
-		(__BD ((__SCREENWIDTH__ - _textEndGame -> width ()) >> 1), __BD 240, __BD 0));
+		(__BD ((__SCREENWIDTH__ - _textEndGame -> visualLength ()) >> 1), __BD 240, __BD 0));
 	_textPercentageGame -> drawOn (s, QGAMES::Position 
-		(__BD ((__SCREENWIDTH__ - _textPercentageGame -> width ()) >> 1), __BD 270, __BD 0));
+		(__BD ((__SCREENWIDTH__ - _textPercentageGame -> visualLength ()) >> 1), __BD 270, __BD 0));
 }
 
 // ---
@@ -956,9 +956,9 @@ void SabreWulfWinState::drawOn (QGAMES::Screen* s)
 	uW -> drawOn (s, 0, pos);
 	// Draws the text...
 	_textNextGame -> drawOn (s, QGAMES::Position 
-		(__BD ((__SCREENWIDTH__ - _textNextGame -> width ()) >> 1), __BD 150, __BD 0));
+		(__BD ((__SCREENWIDTH__ - _textNextGame -> visualLength ()) >> 1), __BD 150, __BD 0));
 	_textCopyright -> drawOn (s, QGAMES::Position 
-		(__BD ((__SCREENWIDTH__ - _textCopyright -> width ()) >> 1), __BD 320, __BD 0));
+		(__BD ((__SCREENWIDTH__ - _textCopyright -> visualLength ()) >> 1), __BD 320, __BD 0));
 }
 
 // ---
