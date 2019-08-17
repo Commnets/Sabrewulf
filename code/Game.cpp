@@ -9,11 +9,11 @@
 #include "GameStates.hpp"
 #include "InputHandler.hpp"
 #include "Defs.hpp"
-#include <graphicsinclude.hpp>
+#include <SDL/sdlgame.hpp>
 
 // ---
 SabreWulfGame::SabreWulfGame ()
-	 : QGAMES::ArcadeGame (new __QGAMESGRAPHICSLIBRARY_IMPLEMENTATIONCLASS__ (), QGAMES::Worlds ()),
+	 : QGAMES::ArcadeGame (new SDLGame (/** No FMOD. */), QGAMES::Worlds ()),
 	  _levels (),
 	  _level (0), // The level by default...	  
 	  _scoreFrame (NULL), _energy (NULL), _lives (NULL),
