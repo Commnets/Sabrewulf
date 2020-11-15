@@ -462,7 +462,7 @@
 	<!-- The letters -->
 	<!-- Classical for Community Networks projects -->
 	<Form id="100" name="Letters" file="forms/Letters3.png" width="512" height="512" 
-            fSpacing="0" fMargin="0" fWidth="32" fHeight="32" aColor="255" nFrames="256">
+            fSpacing="0" fMargin="0" fWidth="32" fHeight="32" aColor="255" nFrames="224">
 		<Frame id="0" width="7"/>
 		<Frame id="1" width="11"/>
 		<Frame id="2" width="11"/>
@@ -690,7 +690,7 @@
 	</Form>
 	<!-- An african version -->
 	<Form id="101" name="ALetters" file="forms/Africa.png" width="512" height="512" 
-            fSpacing="0" fMargin="0" fWidth="32" fHeight="32" aColor="255" nFrames="256">
+            fSpacing="0" fMargin="0" fWidth="32" fHeight="32" aColor="255" nFrames="224">
 		<Frame id="0" width="21"/>
 		<Frame id="1" width="12"/>
 		<Frame id="2" width="13"/>
@@ -918,7 +918,7 @@
 	</Form>
 	<!-- An african little version -->
 	<Form id="102" name="ALittleLetters" file="forms/AfricanLittle.png" width="256" height="256" 
-            fSpacing="0" fMargin="0" fWidth="16" fHeight="16" aColor="255" nFrames="256">
+            fSpacing="0" fMargin="0" fWidth="16" fHeight="16" aColor="255" nFrames="224">
 		<Frame id="0" width="10"/>
 		<Frame id="1" width="6"/>
 		<Frame id="2" width="7"/>
