@@ -9,10 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Archivos de recursos">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="files">
       <UniqueIdentifier>{6786cfdc-250e-40ee-bed1-55d878f73660}</UniqueIdentifier>
     </Filter>
@@ -24,6 +20,9 @@
     </Filter>
     <Filter Include="files\forms">
       <UniqueIdentifier>{bf420238-1aa6-4d68-9844-fa7a641169c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de recursos">
+      <UniqueIdentifier>{a02fc73b-a626-4e13-a6d8-05af046e4a97}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +99,15 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Guardian.hpp">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="resource1.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="resource2.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="resource3.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
